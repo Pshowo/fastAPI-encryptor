@@ -13,7 +13,7 @@ białe znaki (minimum to spacja, tabulator, znak nowej linii),
 
 ## Todo
 1. FastAPI
-    - [ ] utworzyć serwer FASTApi
+    - [x] utworzyć serwer FASTApi
     - [ ] dodać linki do testu połączenia
     - [ ] deploy server
     - [ ] ustawić CI z github main
