@@ -1,4 +1,6 @@
 from vigenere.encryptor import encrypt
 
 def test_encrypt():
-    assert encrypt() == ['A', 'B', 'C', 'D', 'E', 'F']
+    # Encrypting word
+    assert encrypt("BEDE", "DAFE") == "EECC"
+    assert encrypt("BACA", "DAFE") == "EECC"
