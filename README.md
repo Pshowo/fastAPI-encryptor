@@ -19,8 +19,8 @@ białe znaki (minimum to spacja, tabulator, znak nowej linii),
     - [ ] ustawić CI z github main
     - [ ] dodać autoryzację 
 2. Szyfr
-    - [ ] utworzyć prosty system szyfrowania 
-    - [ ] utworzyć prosty system deszyfrowania
+    - [x] utworzyć prosty system szyfrowania 
+    - [x] utworzyć prosty system deszyfrowania
     - [ ] dodać szyfrowanie do serwera fastapi
     - [ ] skomplikować szyfr  
 
