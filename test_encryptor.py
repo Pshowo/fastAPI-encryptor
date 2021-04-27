@@ -19,11 +19,18 @@ def test_table():
  ['E' 'F' 'A' 'B' 'C' 'D']
  ['F' 'A' 'B' 'C' 'D' 'E']]"""
 
+# @pytest.mark.xfail
 def test_encrypt():
     v = Vigenere()
-    assert v.encrypt("BEDE", "DAFE") == "EECC"
-    assert v.encrypt("BACA", "DAFE") == "EABE"
+    assert v.encrypt("BEDE", key="DAFE") == ("EECC", "DAFE")
+    assert v.encrypt("BACA", key="DAFE") == ("EABE", "DAFE")
     with pytest.raises(AssertionError):
-        v.encrypt("BA", "DAFE")
+        v.encrypt("BA", key="DAFE")
     with pytest.raises(AssertionError):
-        v.encrypt("BAD", "DS")
+        v.encrypt("BAD", key="DS")
+
+def test_decrypt():
+    v = Vigenere()
+    assert v.decrypt("EECC", "DAFE") == "BEDE"
+    assert v.decrypt("EABE", "DAFE") == "BACA"
+
