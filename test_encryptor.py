@@ -1,4 +1,5 @@
 from vigenere.encryptor import Vigenere
+import pytest
 import unittest
 # def test_encrypt():
 #     # Encrypting word
@@ -22,3 +23,7 @@ def test_encrypt():
     v = Vigenere()
     assert v.encrypt("BEDE", "DAFE") == "EECC"
     assert v.encrypt("BACA", "DAFE") == "EABE"
+    with pytest.raises(AssertionError):
+        v.encrypt("BA", "DAFE")
+    with pytest.raises(AssertionError):
+        v.encrypt("BAD", "DS")

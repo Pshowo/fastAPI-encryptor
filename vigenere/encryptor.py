@@ -37,4 +37,10 @@ class Vigenere:
             Encrypted message.
         """
         closed_msg = ""
+        assert len(msg) == len(key), "Wrong length message or key."
+        
+        for char in range(len(msg)):
+            x0 = np.argwhere(self.table[0] == msg[char])
+            x1 = np.argwhere(self.table[:, [0]] == key[char])
+            closed_msg += self.table[x0[0][0]][x1[0][0]]
         return closed_msg
