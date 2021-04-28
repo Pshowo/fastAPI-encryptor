@@ -1,10 +1,6 @@
 from vigenere.encryptor import Vigenere
 import pytest
 import unittest
-# def test_encrypt():
-#     # Encrypting word
-#     assert encrypt("BEDE", "DAFE") == "EECC"
-#     assert encrypt("BACA", "DAFE") == "EECC"
 
 def test_vigenere_init():
     v = Vigenere()
@@ -28,9 +24,14 @@ def test_encrypt():
         v.encrypt("BA", key="DAFE")
     with pytest.raises(AssertionError):
         v.encrypt("BAD", key="DS")
+    test1 = v.encrypt("BACA") 
+    assert len(test1[1]) == len("BACA")
+    
 
 def test_decrypt():
     v = Vigenere()
     assert v.decrypt("EECC", "DAFE") == "BEDE"
     assert v.decrypt("EABE", "DAFE") == "BACA"
+    t1 = v.encrypt("BEDEBACA")
+    assert v.decrypt(t1[0], t1[1]) == "BEDEBACA"
 

@@ -5,7 +5,7 @@ from typing import Optional
 from vigenere import *
 import vigenere
 
-v = None
+v = Vigenere()
 
 tags_metadata = [
     {
@@ -45,10 +45,6 @@ def append_message(open_msg, close_msg, key):
         "key": key,
         "close_msg": close_msg }
 
-@app.on_event("startup")
-async def startup_event():
-    global v
-    v = Vigenere()
 
 @app.get("/",  tags=['cipher'])
 async def root():

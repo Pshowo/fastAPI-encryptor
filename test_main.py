@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 import json
 
-from main import app
+from main import app, append_message, fake_msg
 
 client = TestClient(app)
 
@@ -28,13 +28,26 @@ def test_vigenere():
         "decryptor": "/decryptor"
     }
 
+
 def test_vigenere_encryptor():
-    response = client.get("/v1/vigenere/encryptor")
+    response = client.post(
+        "/v1/vigenere/encryptor",
+        json={"msg": "BEDE"},
+    )
+    resp = response.json()
+    print(resp)
     assert response.status_code == 200
-    assert response.json() == {'0': "fake msg"}
+    assert resp['1']["open_msg"] == "BEDE"
+    assert fake_msg[1]["open_msg"] == "BEDE"
 
 
 def test_vigenere_decryptor():
-    response = client.get("/v1/vigenere/decryptor")
+    response = client.post(
+        "/v1/vigenere/decryptor",
+        json={"msg": "BFAC", "key": "ABDE"},
+    )
     assert response.status_code == 200
-    assert response.json() == {'0': "fake msg"}
+    assert response.json() == {"decoded_messege": "BEDE"}
+    
+#{'0': 'fake msg', '1': {'open_msg': 'BEDE', 'key': 'EBFE', 'close_msg': 'FFCC'}}
+#{'0': 'fake msg', '1': {'open_msg': 'BEDE', 'key': 'CDAB', 'close_msg': 'DBDF'}}
