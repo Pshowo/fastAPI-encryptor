@@ -51,6 +51,20 @@ class Vigenere:
         return closed_msg, self.key
 
     def decrypt(self, c_msg, key):
+        """Decodes cipher message.
+
+        Parameters
+        ----------
+        c_msg : [str]
+            Closed message.
+        key : [str]
+            Key to open the message
+
+        Returns
+        -------
+        [str]
+            Decrypted message
+        """
         open_msg = ""
         for char in range(len(c_msg)):
             x1 = np.argwhere(self.table[:, [0]] == key[char])
@@ -58,6 +72,3 @@ class Vigenere:
             open_msg += self.table[x0[0][0]][0]
         return open_msg
 
-v = Vigenere()
-var = v.encrypt("BACA", key="DAFE")
-print(v.decrypt(var[0], var[1]))
