@@ -22,7 +22,7 @@ białe znaki (minimum to spacja, tabulator, znak nowej linii),
     - [x] utworzyć prosty system szyfrowania 
     - [x] utworzyć prosty system deszyfrowania
     - [x] dodać szyfrowanie do serwera fastapi
-    - [ ] dodac rozszyfrowanie do serwera fastapi
+    - [x] dodac rozszyfrowanie do serwera fastapi
     - [ ] skomplikować szyfr  
 
 3. Opcjonalnie
