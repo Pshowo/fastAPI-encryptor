@@ -1,17 +1,26 @@
 import numpy as np
+import string
 import random
+from icecream import ic
+
 
 class Vigenere:
 
-    def __init__(self):
-        self.alphabet = np.array(['A', 'B', 'C', 'D', 'E', 'F'])
-        self.table = self.table()
-        self.key = ""
+    def __init__(self, alphabet, **kwargs):
+        self.alphabet = self.gen_alphabet(alphabet)
+        self.key_length = kwargs['key_length'] if "key_length" in kwargs else 8
+        self._ke = None
+        self.table = self.gen_table()
 
     def __str__(self):
+        print("Table shape:", np.shape(self.table))
+        print("Key length:", self.key_length)
         return str(self.table)
 
-    def table(self):
+    def gen_alphabet(self, alphabet):
+        return np.array([char for char in alphabet])
+    
+    def gen_table(self):
         """Generate cipher table
 
         Returns
@@ -19,12 +28,16 @@ class Vigenere:
         [numpy arr]
             Cipher table
         """
-        table = np.array([['A', 'B', 'C', 'D', 'E', 'F']])
-        for i in range(1 , len(self.alphabet)):
+        key_alphabet = " " + string.ascii_letters + string.digits + string.punctuation
+        self._ke = [char for char in key_alphabet]  # List of chars to generate a random key
+        ke_ = np.array([[char] for char in key_alphabet])
+        table = np.array([np.copy(self.alphabet)])
+        for i in range(0, len(ke_)-1):
             table = np.append(table, [np.roll(self.alphabet, -i)], axis=0)
+        table = np.append(ke_, table, axis=1)
         return table
 
-    def encrypt(self, msg, **kwargs):
+    def encrypt(self, msg):
         """Encrypts message using by Vigenere method. 
 
         Parameters
@@ -34,21 +47,25 @@ class Vigenere:
 
         Returns
         -------
-        [touple(msg, key)]
-            Touple with encrypted message and the key which a message will be encrypted.
+        [tuple(msg, key)]
+            Tuple with encrypted message and the key which a message will be encrypted.
         """
-        closed_msg = ""
-        if 'key' in kwargs:
-            self.key = kwargs['key']
+        if msg == "":
+            return "Message is empty. Write the message to encode.", None
         else:
-            self.key = "".join(random.choice(self.alphabet) for _ in range(len(msg)))
-        assert len(msg) == len(self.key), "Wrong length message or key."
-        
-        for char in range(len(msg)):
-            x0 = np.argwhere(self.table[0] == msg[char])
-            x1 = np.argwhere(self.table[:, [0]] == self.key[char])
-            closed_msg += self.table[x0[0][0]][x1[0][0]]
-        return closed_msg, self.key
+            closed_msg = ""
+            key_range = self.key_length if len(msg) >= self.key_length else len(msg)
+            key = "".join(random.choice(self._ke[1:]) for _ in range(key_range))
+            k = 0
+
+            for char in range(len(msg)):
+                if k == len(key):
+                    k = 0
+                x0 = np.argwhere(self.table[0][1:] == msg[char])[0][0] + 1
+                x1 = np.argwhere(self.table[1:, [0]] == key[k])[0][0] + 1
+                closed_msg += self.table[x1][x0]
+                k += 1
+            return closed_msg, key
 
     def decrypt(self, c_msg, key):
         """Decodes cipher message.
@@ -65,10 +82,19 @@ class Vigenere:
         [str]
             Decrypted message
         """
-        open_msg = ""
-        for char in range(len(c_msg)):
-            x1 = np.argwhere(self.table[:, [0]] == key[char])
-            x0 = np.argwhere(self.table[x1[0][0]] == c_msg[char])
-            open_msg += self.table[x0[0][0]][0]
-        return open_msg
+        if c_msg == "":
+            return "No message. Write encoded message."
+        if key == "":
+            return "No key. Write the key attached with the encoded message."
+        else:
+            open_msg = ""
+            k = 0
+            for char in range(len(c_msg)):
+                if k == len(key):
+                    k = 0
+                x1 = np.argwhere(self.table[1:, [0]] == key[k])[0][0] + 1  # Finds char in key column
+                x0 = np.argwhere(self.table[x1][1:] == c_msg[char])[0][0]  # Finds char in particular row
+                open_msg += self.table[0][1:][x0]
+                k += 1
+            return open_msg
 
