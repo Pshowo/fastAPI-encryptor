@@ -28,8 +28,8 @@ def test_vigenere():
     response = client.get("/v1/vigenere")
     assert response.status_code == 200
     assert response.json() == {
-        "encryptor": "/encryptor",
-        "decryptor": "/decryptor"
+        "encryptor": "/v1/vigenere/encryptor",
+        "decryptor": "/v1/vigenere/decryptor"
     }
 
 
@@ -38,6 +38,14 @@ def test_vigenere_encryptor(credentials: HTTPBasicCredentials = Security(securit
     response = client.post(
         "/v1/vigenere/encryptor",
         json={"msg": "BEDE"},
+        auth=auth
+    )
+    resp = response.json()
+    assert response.status_code == 200
+
+    response = client.post(
+        "/v1/vigenere/encryptor?q=sampleTextToEncode",
+        json={"msg": ""},
         auth=auth
     )
     resp = response.json()
