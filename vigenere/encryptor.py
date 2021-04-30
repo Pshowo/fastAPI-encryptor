@@ -1,8 +1,6 @@
 import numpy as np
 import string
 import random
-from icecream import ic
-
 
 class Vigenere:
 
