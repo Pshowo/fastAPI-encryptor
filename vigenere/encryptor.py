@@ -7,33 +7,56 @@ from icecream import ic
 class Vigenere:
 
     def __init__(self, alphabet, **kwargs):
-        self.alphabet = self.gen_alphabet(alphabet)
+        self.raw_alphabet = alphabet
+        self.alphabet = self.gen_alphabet(self.raw_alphabet)
         self.key_length = kwargs['key_length'] if "key_length" in kwargs else 8
         self._ke = None
         self.table = self.gen_table()
 
     def __str__(self):
-        print("Table shape:", np.shape(self.table))
+        print("Raw alphabet:", self.raw_alphabet)
         print("Key length:", self.key_length)
         return str(self.table)
 
     def gen_alphabet(self, alphabet):
-        return np.array([char for char in alphabet])
-    
+        """Based on the input alphabet, the method generated an array. 
+        If char appears twice or more in the alphabet, the rest of them removed.
+
+        Parameters
+        ----------
+        alphabet : [str]
+            A string containing all chars to use.
+
+        Returns
+        -------
+        [np.array]
+            1d array with chars
+        """
+        # 
+        for char_ in alphabet:
+            if alphabet.count(char_) > 1:
+                print("Double:", char_)
+                alphabet = alphabet.replace(char_, "")
+
+        " " + alphabet
+        return np.array([char_ for char_ in alphabet])
+
     def gen_table(self):
-        """Generate cipher table
+        """Generate cipher table. Each row is shifted on a random in both directions.
 
         Returns
         -------
         [numpy arr]
-            Cipher table
+            Cipher table.
         """
         key_alphabet = " " + string.ascii_letters + string.digits + string.punctuation
         self._ke = [char for char in key_alphabet]  # List of chars to generate a random key
         ke_ = np.array([[char] for char in key_alphabet])
         table = np.array([np.copy(self.alphabet)])
+
         for i in range(0, len(ke_)-1):
-            table = np.append(table, [np.roll(self.alphabet, -i)], axis=0)
+            i = random.randrange(-len(self.raw_alphabet), len(self.raw_alphabet))
+            table = np.append(table, [np.roll(self.alphabet, i)], axis=0)
         table = np.append(ke_, table, axis=1)
         return table
 
@@ -48,10 +71,10 @@ class Vigenere:
         Returns
         -------
         [tuple(msg, key)]
-            Tuple with encrypted message and the key which a message will be encrypted.
+            Tuple with encrypted message and the key, which a message will be decrypted.
         """
         if msg == "":
-            return "Message is empty. Write the message to encode.", None
+            return "Message is empty. Write the message to encode.", -1
         else:
             closed_msg = ""
             key_range = self.key_length if len(msg) >= self.key_length else len(msg)
@@ -59,6 +82,8 @@ class Vigenere:
             k = 0
 
             for char in range(len(msg)):
+                if msg[char] not in self.raw_alphabet:
+                    return f'This: "{msg[char]}" character is not available. Replace it for similar.', -1
                 if k == len(key):
                     k = 0
                 x0 = np.argwhere(self.table[0][1:] == msg[char])[0][0] + 1
@@ -75,16 +100,16 @@ class Vigenere:
         c_msg : [str]
             Closed message.
         key : [str]
-            Key to open the message
+            Key to open the message.
 
         Returns
         -------
         [str]
-            Decrypted message
+            Decrypted message.
         """
         if c_msg == "":
             return "No message. Write encoded message."
-        if key == "":
+        if key == "" or key == -1:
             return "No key. Write the key attached with the encoded message."
         else:
             open_msg = ""
@@ -97,4 +122,3 @@ class Vigenere:
                 open_msg += self.table[0][1:][x0]
                 k += 1
             return open_msg
-
