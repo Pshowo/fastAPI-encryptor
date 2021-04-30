@@ -21,7 +21,11 @@ Authentication: **admin** pass: **qwerty**
         |- v1/ ( GET info )
             |- vigenere/ ( GET cipher )
                     |- encryptor/ ( POST messege to encode, auth* )
-                    |- decryptor/ ( POST closed message to decode, auth* ) 
+                    |- decryptor/ ( POST closed message to decode, auth* )
+            |
+            |- RSA/ (GET cipher)
+                    |- encryptor/ ( POST messege to encode, auth* )
+                    |- decryptor/ ( POST closed message to decode, auth* )
 
 GET basic info:
 
@@ -29,13 +33,13 @@ GET basic info:
 
 GET avaiable methods:
 
-    GET https://fastapiencryptor.herokuapp.com/vigenere/
+    GET https://fastapiencryptor.herokuapp.com/v1/vigenere/
 
 POST open message to encode (required basic authentication):
 
     1. JSON
 
-    POST https://fastapiencryptor.herokuapp.com/vigenere/encryptor/
+    POST https://fastapiencryptor.herokuapp.com/v1/vigenere/encryptor/
     {   "msg": "This message will be encoded"   }
 
     2. JSON and parameter "q"
@@ -47,7 +51,7 @@ POST closed message and key to decode (required basic authentication):
     
     JSON
 
-    POST https://fastapiencryptor.herokuapp.com/vigenere/encryptor/
+    POST https://fastapiencryptor.herokuapp.com/v1/vigenere/decryptor/
     {  "msg": "fa4y5Ń",  "key": "fU]=V~"   }
 
 ## Task
