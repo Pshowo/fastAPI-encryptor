@@ -9,9 +9,11 @@ The key lenght can be modify, default value is 8 chars. Max key length the is li
 
 ## Hot to use it?
 To use it simple way you can use an applications like this [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/).
-
+***
 API is avaiable on: https://fastapiencryptor.herokuapp.com/
+
 API docs: https://fastapiencryptor.herokuapp.com/docs
+***
 
 Authentication: **admin** pass: **qwerty**
 
