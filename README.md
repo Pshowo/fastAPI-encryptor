@@ -4,9 +4,9 @@
 Implementacja dowolnego szyfru:
 - [ ] obsługiwane znaki - alfabet łaciński (case sensitive), cyfry, znaki interpunkcyjne i
 białe znaki (minimum to spacja, tabulator, znak nowej linii),
-- [ ] implementacja metod encode i decode dla wybranego algorytmu,
-- [ ] testy jednostkowe,
-- [ ] serwer FastAPI wykorzystujący zaimplementowane metody,
+- [x] implementacja metod encode i decode dla wybranego algorytmu,
+- [x] testy jednostkowe,
+- [x] serwer FastAPI wykorzystujący zaimplementowane metody,
 - [ ] autoryzacja BasicAuth do powyższego serwera,
 - [ ] dokumentacja kodu oraz README,
 - [ ] (opcjonalnie) dockeryzacja rozwiązania.
@@ -19,9 +19,10 @@ białe znaki (minimum to spacja, tabulator, znak nowej linii),
     - [ ] ustawić CI z github main
     - [ ] dodać autoryzację 
 2. Szyfr
-    - [ ] utworzyć prosty system szyfrowania 
-    - [ ] utworzyć prosty system deszyfrowania
-    - [ ] dodać szyfrowanie do serwera fastapi
+    - [x] utworzyć prosty system szyfrowania 
+    - [x] utworzyć prosty system deszyfrowania
+    - [x] dodać szyfrowanie do serwera fastapi
+    - [x] dodac rozszyfrowanie do serwera fastapi
     - [ ] skomplikować szyfr  
 
 3. Opcjonalnie

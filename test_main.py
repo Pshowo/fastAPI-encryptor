@@ -1,9 +1,13 @@
 from fastapi.testclient import TestClient
+from fastapi import FastAPI, Security
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from requests.auth import HTTPBasicAuth
 import json
 
-from main import app
+from main import app, append_message, fake_msg
 
 client = TestClient(app)
+security = HTTPBasic(realm="Basic")
 
 def test_root():
     response = client.get("/")
@@ -28,13 +32,39 @@ def test_vigenere():
         "decryptor": "/decryptor"
     }
 
-def test_vigenere_encryptor():
-    response = client.get("/v1/vigenere/encryptor")
+
+def test_vigenere_encryptor(credentials: HTTPBasicCredentials = Security(security)):
+    auth = HTTPBasicAuth(username="admin", password="qwerty")
+    response = client.post(
+        "/v1/vigenere/encryptor",
+        json={"msg": "BEDE"},
+        auth=auth
+    )
+    resp = response.json()
     assert response.status_code == 200
-    assert response.json() == {'0': "fake msg"}
 
 
-def test_vigenere_decryptor():
-    response = client.get("/v1/vigenere/decryptor")
+def test_vigenere_decryptor(credentials: HTTPBasicCredentials = Security(security)):
+    auth = HTTPBasicAuth(username="admin", password="qwerty")
+    response = client.post(
+        "/v1/vigenere/decryptor",
+        json={"msg": "BFAC", "key": "ABDE"},
+        auth=auth
+    )
     assert response.status_code == 200
-    assert response.json() == {'0': "fake msg"}
+
+
+def test_security_no_credentials():
+    response = client.post("/v1/vigenere/encryptor")
+    assert response.json() == {"detail": "Not authenticated"}
+    assert response.status_code == 401, response.text
+    assert response.headers["WWW-Authenticate"] == 'Basic'
+
+def test_security_invalid_credentials(credentials: HTTPBasicCredentials = Security(security)):
+    auth = HTTPBasicAuth(username="a", password="q")
+    response = client.post(
+        "/v1/vigenere/encryptor", headers={"Authorization": "Basic notabase64token"}
+    )
+    assert response.status_code == 401, response.text
+    assert response.headers["WWW-Authenticate"] == 'Basic'
+    assert response.json() == {"detail": "Invalid authentication credentials"}
