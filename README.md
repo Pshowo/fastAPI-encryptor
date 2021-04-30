@@ -69,10 +69,10 @@ białe znaki (minimum to spacja, tabulator, znak nowej linii),
 
 Coverage main:
 
-![img.png](additionalfiles\img\img.png)
+![img.png](additionalfiles/img/img.png)
 
 Coverage vigenere:
 
-![img_1.png](additionalfiles\img\img_1.png)
+![img_1.png](additionalfiles/img/img_1.png)
 
 
