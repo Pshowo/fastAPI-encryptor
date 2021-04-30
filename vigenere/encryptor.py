@@ -2,6 +2,7 @@ import numpy as np
 import string
 import random
 
+
 class Vigenere:
 
     def __init__(self, alphabet, **kwargs):
@@ -40,7 +41,7 @@ class Vigenere:
         return np.array([char_ for char_ in alphabet])
 
     def gen_table(self):
-        """Generate cipher table. Each row is shifted on a random in both directions.
+        """Generate cipher table. In the each row alphabet is shuffle randomly.
 
         Returns
         -------
@@ -52,14 +53,15 @@ class Vigenere:
         ke_ = np.array([[char] for char in key_alphabet])
         table = np.array([np.copy(self.alphabet)])
 
-        for i in range(0, len(ke_)-1):
-            i = random.randrange(-len(self.raw_alphabet), len(self.raw_alphabet))
-            table = np.append(table, [np.roll(self.alphabet, i)], axis=0)
+        for i in range(0, len(ke_) - 1):
+            t1 = np.copy(self.alphabet)
+            np.random.shuffle(t1)
+            table = np.append(table, [t1], axis=0)
         table = np.append(ke_, table, axis=1)
         return table
 
     def encrypt(self, msg):
-        """Encrypts message using by Vigenere method. 
+        """Encrypts message using by Vigenere method. The message before encoded was reverse.
 
         Parameters
         ----------
@@ -78,7 +80,7 @@ class Vigenere:
             key_range = self.key_length if len(msg) >= self.key_length else len(msg)
             key = "".join(random.choice(self._ke[1:]) for _ in range(key_range))
             k = 0
-
+            msg = msg[::-1]
             for char in range(len(msg)):
                 if msg[char] not in self.raw_alphabet:
                     return f'This: "{msg[char]}" character is not available. Replace it for similar.', -1
@@ -91,7 +93,7 @@ class Vigenere:
             return closed_msg, key
 
     def decrypt(self, c_msg, key):
-        """Decodes cipher message.
+        """Decodes and reverse cipher message.
 
         Parameters
         ----------
@@ -119,4 +121,4 @@ class Vigenere:
                 x0 = np.argwhere(self.table[x1][1:] == c_msg[char])[0][0]  # Finds char in particular row
                 open_msg += self.table[0][1:][x0]
                 k += 1
-            return open_msg
+            return open_msg[::-1]

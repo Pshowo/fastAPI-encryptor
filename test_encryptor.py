@@ -56,9 +56,9 @@ def test_encrypt():
     # if appear char which is unavailable
     v = Vigenere("ABCDEF")
     t1 = v.encrypt("żółć")
-    assert t1[0] == 'This: "ż" character is not available. Replace it for similar.' and t1[1] == -1
+    assert t1[0] == 'This: "ć" character is not available. Replace it for similar.' and t1[1] == -1
     t1 = v.encrypt("Aółć")
-    assert t1[0] == 'This: "ó" character is not available. Replace it for similar.' and t1[1] == -1
+    assert t1[0] == 'This: "ć" character is not available. Replace it for similar.' and t1[1] == -1
 
 
 def test_decrypt():
