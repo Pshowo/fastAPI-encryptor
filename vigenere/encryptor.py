@@ -34,7 +34,6 @@ class Vigenere:
         # 
         for char_ in alphabet:
             if alphabet.count(char_) > 1:
-                print("Double:", char_)
                 alphabet = alphabet.replace(char_, "")
 
         " " + alphabet
