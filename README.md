@@ -2,10 +2,14 @@
 
 ## About
 
-API with cipher algorithm to encrypt and decrypt a message using by Vigenère cipher.
-Key alphabet consists of 95 chars. For each row aplhabet was shuffle.
-Script can encoded any alphabet, it's only write string coinain required characters in atribute class Vigenere.
-The key lenght can be modify, default value is 8 chars. Max key length the is limited by length message.
+#### Vigenère cipher
+>API with cipher algorithm to encrypt and decrypt a message using by Vigenère cipher.
+>Key alphabet consists of 95 chars. For each row aplhabet was shuffle.
+>Script can encoded any alphabet, it's only write string coinain required characters in atribute class Vigenere.
+>The key lenght can be modify, default value is 8 chars. Max key length the is limited by length message.
+
+#### RSA cpiher:
+>    Work in progess [here](https://github.com/Pshowo/fastAPI-encryptor/tree/feature-RSA).
 
 ## Hot to use it?
 To use it simple way you can use an applications like this [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/).
