@@ -2,10 +2,14 @@
 
 ## About
 
-API with cipher algorithm to encrypt and decrypt a message using by Vigenère cipher.
-Key alphabet consists of 95 chars. For each row aplhabet was shuffle.
-Script can encoded any alphabet, it's only write string coinain required characters in atribute class Vigenere.
-The key lenght can be modify, default value is 8 chars. Max key length the is limited by length message.
+#### Vigenère cipher
+>API with cipher algorithm to encrypt and decrypt a message using by Vigenère cipher.
+>Key alphabet consists of 95 chars. For each row aplhabet was shuffle.
+>Script can encoded any alphabet, it's only write string coinain required characters in atribute class Vigenere.
+>The key lenght can be modify, default value is 8 chars. Max key length the is limited by length message.
+
+#### RSA cpiher:
+>    Work in progess...
 
 ## Hot to use it?
 To use it simple way you can use an applications like this [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/).
@@ -20,8 +24,14 @@ Authentication: **admin** pass: **qwerty**
     root/
         |- v1/ ( GET info )
             |- vigenere/ ( GET cipher )
-                    |- encryptor/ ( POST messege to encode, auth* )
-                    |- decryptor/ ( POST closed message to decode, auth* ) 
+            |        |- encryptor/ ( POST messege to encode, auth* )
+            |        |- decryptor/ ( POST closed message to decode, auth* )
+            |
+            |- RSA/ (GET cipher, e, n)
+                     |- encryptor/ ( POST messege to encode, auth* )
+                     |- decryptor/ ( POST closed message to decode, auth* )
+
+### Vigenère 
 
 GET basic info:
 
@@ -49,17 +59,25 @@ POST closed message and key to decode (required basic authentication):
 
     POST https://fastapiencryptor.herokuapp.com/vigenere/encryptor/
     {  "msg": "fa4y5Ń",  "key": "fU]=V~"   }
+***
+### RSA
 
-## Task
-Implementacja dowolnego szyfru:
-- [x] obsługiwane znaki - alfabet łaciński (case sensitive), cyfry, znaki interpunkcyjne i
-białe znaki (minimum to spacja, tabulator, znak nowej linii),
-- [x] implementacja metod encode i decode dla wybranego algorytmu,
-- [x] testy jednostkowe,
-- [x] serwer FastAPI wykorzystujący zaimplementowane metody,
-- [x] autoryzacja BasicAuth do powyższego serwera,
-- [x] dokumentacja kodu oraz README,
-- [ ] (opcjonalnie) dockeryzacja rozwiązania.
+GET avaiable methods:
+
+    GET http://localhost:8000/rsa
+
+POST open message to encode (required basic authentication):
+
+    GET http://localhost:8000/rsa/encryptor
+    {   "msg": "14",    "n": 3127,    "e": 3   }
+
+POST closed message and key to decode (required basic authentication):
+    
+    JSON
+
+    POST https://fastapiencryptor.herokuapp.com/vigenere/encryptor/
+    {   "msg": "2744",  "n": 3127   }
+
 
 ## Test
 
